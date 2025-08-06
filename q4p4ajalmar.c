@@ -24,8 +24,14 @@ int main() {
         }
     } else {
         // Lê e soma os valores existentes
-        while (fread(&valor, sizeof(float), 1, arquivo) == 1) {
+        fseek(arquivo, 0 , SEEK_END);
+        int tamanho = (int)ftell(arquivo) / sizeof(float);
+         for (int i = 0; i < tamanho; i++)
+        {
+             fseek(arquivo, i * sizeof(float), SEEK_SET);
+            fread(&valor, sizeof(float), 1, arquivo);
             soma += valor;
+             printf("%.2f \n" ,valor);
         }
     }
 
