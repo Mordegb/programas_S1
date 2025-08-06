@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n;
+    int **enderecos; // Ponteiro para ponteiros de inteiros
+
+    // Solicita ao usuário o número de inteiros
+    printf("Digite o número de inteiros que deseja armazenar: ");
+    scanf("%d", &n);
+
+    // Aloca memória para armazenar 'n' ponteiros para inteiros
+    enderecos = (int **)malloc(n * sizeof(int *));
+
+    if (enderecos == NULL) {
+        printf("Erro ao alocar memória para os ponteiros!\n");
+        return 1;
+    }
+
+    // Aloca memória para cada inteiro individualmente usando aritmética de ponteiros
+    for (int i = 0; i < n; i++) {
+        *(enderecos + i) = (int *)malloc(sizeof(int));
+
+        if (*(enderecos + i) == NULL) {
+            printf("Erro ao alocar memória para o inteiro %d!\n", i);
+
+            // Libera a memória alocada até agora antes de sair
+            for (int j = 0; j < i; j++) {
+                free(*(enderecos + j));
+            }
+            free(enderecos);
+            return 1;
+        }
+    }
+
+    // Lê os valores dos inteiros usando aritmética de ponteiros
+    printf("Digite os %d valores inteiros:\n", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", *(enderecos + i));
+    }
+
+    // Exibe os valores armazenados usando apenas aritmética de ponteiros
+    printf("\nValores armazenados:\n");
+    for (int i = 0; i < n; i++) {
+        printf("enderecos[%d] = %d (armazenado em %p)\n",
+               i, **(enderecos + i), (void *)*(enderecos + i));
+    }
+
+    // Libera a memória alocada usando aritmética de ponteiros
+    for (int i = 0; i < n; i++) {
+        free(*(enderecos + i));
+    }
+    free(enderecos);
+
+    return 0;
+}
