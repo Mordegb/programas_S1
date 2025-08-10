@@ -28,9 +28,10 @@ int main() {
         printf("\nAluno %d:\n", i + 1);
         printf("Código: ");
         scanf("%d", &alunos[i]->codigo);
-        
+
         printf("Nome: ");
-        scanf("%s", alunos[i]->nome);  // Nota: limita a 49 caracteres + '\0'
+        fflush(stdin);
+        fgets(alunos[i] -> nome, 50 , stdin);  // Nota: limita a 49 caracteres + '\0'
         
         printf("Nota: ");
         scanf("%f", &alunos[i]->nota);
@@ -42,7 +43,8 @@ int main() {
     // Imprimir os dados dos alunos
     printf("\nDados dos Alunos:\n");
     for (int i = 0; i < 3; i++) {
-        printf("\nAluno %d:\n", i + 1);
+        printf("\n");
+        printf("Aluno %d:\n", i + 1);
         printf("Código: %d\n", alunos[i]->codigo);
         printf("Nome: %s\n", alunos[i]->nome);
         printf("Nota: %.2f\n", alunos[i]->nota);
